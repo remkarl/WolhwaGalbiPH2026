@@ -88,3 +88,25 @@ async function loadEvents() {
 }
 
 document.addEventListener('DOMContentLoaded', loadEvents);
+
+/* ===== ANIMATE ON SCROLL (IntersectionObserver) ===== */
+function initScrollAnimations() {
+  const opts = { threshold: 0.12, rootMargin: '0px 0px -50px 0px' };
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animated');
+        // Once animated, unobserve to avoid repeated work
+        io.unobserve(entry.target);
+      }
+    });
+  }, opts);
+
+  document.querySelectorAll('.animate-on-scroll').forEach(el => io.observe(el));
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initScrollAnimations);
+} else {
+  initScrollAnimations();
+}
