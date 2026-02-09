@@ -46,38 +46,22 @@ section {
   gap: 3rem;
 }
 
-/* ===== SIDEBAR DEFAULT (DESKTOP) ===== */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 260px;
-  height: 100vh;
-  background: var(--dark);
-  color: white;
-  padding: 2rem;
-  z-index: 1000;
-
-  /* ---- Sidebar link base ---- */
-.sidebar .nav a {
-  position: relative;
-  padding-left: 1.5rem;
-  transition: color 0.25s ease, transform 0.25s ease;
+/* ===== ACTIVE SIDEBAR LINK ===== */
+.sidebar .nav a.active {
+  color: #fff;
+  font-weight: 600;
 }
 
-/* ---- Left bar (before) ---- */
-.sidebar .nav a::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 0;
-  height: 100%;
-  background: linear-gradient(45deg, #dc2626, #ef4444);
-  border-radius: 0 8px 8px 0;
-  transition: width 0.3s ease;
+/* Keep the red bar visible on active */
+.sidebar .nav a.active::before {
+  width: 6px;
 }
+
+/* Optional: slightly different glow for active */
+.sidebar .nav a.active {
+  background: rgba(220, 38, 38, 0.08);
+}
+
 
 /* ---- Hover States ---- */
 .sidebar .nav a:hover {
