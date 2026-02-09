@@ -46,49 +46,88 @@ section {
   gap: 3rem;
 }
 
-/* Sidebar */
+/* ===== SIDEBAR DEFAULT (DESKTOP) ===== */
 .sidebar {
   position: fixed;
-  inset: 0 auto 0 0;
+  top: 0;
+  left: 0;
   width: 260px;
+  height: 100vh;
   background: var(--dark);
   color: white;
   padding: 2rem;
-  transform: translateX(-100%);
-  transition: 0.3s;
   z-index: 1000;
+
+  /* ---- Sidebar link base ---- */
+.sidebar .nav a {
+  position: relative;
+  padding-left: 1.5rem;
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
-.sidebar.open {
+/* ---- Left bar (before) ---- */
+.sidebar .nav a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 100%;
+  background: linear-gradient(45deg, #dc2626, #ef4444);
+  border-radius: 0 8px 8px 0;
+  transition: width 0.3s ease;
+}
+
+/* ---- Hover States ---- */
+.sidebar .nav a:hover {
+  color: white;
+  transform: translateX(6px);
+}
+
+.sidebar .nav a:hover::before {
+  width: 6px;
+}
+
+
+  /* DESKTOP: visible */
   transform: translateX(0);
 }
 
-.sidebar .nav a {
-  color: #ccc;
-  display: block;
-  padding: 0.8rem 0;
-  text-decoration: none;
+/* Main content offset for desktop */
+.main {
+  margin-left: 260px;
 }
 
-.sidebar .nav a:hover {
-  color: white;
-}
-
-/* Burger */
+/* ===== BURGER DEFAULT (DESKTOP) ===== */
 .burger {
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  z-index: 1100;
-  background: var(--accent);
-  color: white;
-  border: none;
-  font-size: 1.5rem;
-  padding: 0.5rem 0.8rem;
-  border-radius: 8px;
+  display: none; /* hidden on desktop */
 }
 
-/* Overlay */
+/* ===== MOBILE OVERRIDES ===== */
+@media (max-width: 900px) {
+
+  /* Sidebar hidden by default */
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Burger visible on mobile */
+  .burger {
+    display: block;
+  }
+
+  /* Main content full width on mobile */
+  .main {
+    margin-left: 0;
+  }
+}
+
+
 .overlay {
   position: fixed;
   inset: 0;
@@ -101,12 +140,19 @@ section {
   display: block;
 }
 
+/* Overlay only relevant on mobile */
+@media (min-width: 901px) {
+  .overlay {
+    display: none !important;
+  }
+}
+
 /* Hero */
 .hero {
   min-height: 100vh;
   background:
     linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.75)),
-    url('../images/hero.jpg') center/cover;
+    url('../images/hero.svg') center/cover;
   color: white;
   display: flex;
   align-items: center;
