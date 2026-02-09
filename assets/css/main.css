@@ -404,6 +404,76 @@ section {
   flex-direction: column;
   justify-content: center; /* vertically center text to balance with image */
 }
+.menu-grid {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.75rem;
+  align-items: stretch;
+  flex-wrap: nowrap; /* keep cards on a single row */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
+}
+
+/* Menu item scaffolding: mobile-first responsive sizing */
+.menu-grid .menu-item {
+  flex: 0 0 90%; /* mostly single card on very small screens */
+  min-width: 240px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  height: 100%;
+}
+
+.menu-grid .menu-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+}
+
+/* Ensure menu images keep the same proportions inside the horizontal cards */
+.menu-item .menu-image {
+  width: 100%;
+  height: clamp(160px, 22vw, 320px); /* responsive height that scales with viewport */
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+.menu-item h3 {
+  color: var(--accent);
+  font-size: 1.15rem;
+  margin: 0.25rem 0 0;
+  text-align: center;
+}
+
+.menu-item p {
+  color: #666;
+  margin: 0.25rem 0 0.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+/* Medium screens: two cards per row */
+@media (min-width: 900px) {
+  .menu-grid .menu-item {
+    flex: 0 0 48%;
+    min-width: 360px;
+  }
+}
+
+/* Large screens: three cards per row */
+@media (min-width: 1200px) {
+  .menu-grid .menu-item {
+    flex: 0 0 32%;
+    min-width: 300px;
+  }
+}
 
 .about-image {
   display: flex;
@@ -433,9 +503,23 @@ section {
   transform: translateY(0);
 }
 
+@media (max-width: 768px) {
+  .about {
+    padding: 3rem 1.5rem;
+  }
+  .section-title {
+    font-size: 1.75rem;
+    margin-bottom: 1.75rem;
+  }
+}
+
 @media (max-width: 480px) {
   .about-grid {
     display: block;
+  }
+  .about-text {
+    justify-content: flex-start;
+    margin-bottom: 1.5rem;
   }
   .about-image img {
     width: 100%;
