@@ -147,6 +147,21 @@ function initMenuImageModal() {
     if (e.target === modal) closeModal();
   });
 
+  // toggle browser fullscreen on image click (makes the image truly full)
+  modalImg.addEventListener('click', async (e) => {
+    // don't propagate to modal overlay
+    e.stopPropagation();
+    try {
+      if (!document.fullscreenElement) {
+        if (modalImg.requestFullscreen) await modalImg.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) await document.exitFullscreen();
+      }
+    } catch (err) {
+      // ignore fullscreen errors
+    }
+  });
+
   // close on ESC
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal.classList.contains('open')) {
