@@ -72,18 +72,24 @@ async function loadEvents() {
       const res = await fetch(`content/events/${f}`);
       if (!res.ok) continue;
       const e = await res.json();
-      container.innerHTML += `
-        <article class="event-card">
+      const card = document.createElement('article');
+      card.className = 'event-card animate-on-scroll';
+      card.innerHTML = `
+        ${e.image ? `<img src="${e.image}" alt="${e.title}" class="event-image">` : ''}
+        <div class="event-content">
           <h3>${e.title}</h3>
           <p class="date">${e.date}</p>
           <p>${e.description}</p>
-        </article>`;
+          <button onclick="alert('Learn more about: ${e.title}')">Learn More</button>
+        </div>
+      `;
+      container.appendChild(card);
       found = true;
     } catch {}
   }
 
   if (!found) {
-    container.innerHTML = '<p>No upcoming events.</p>';
+    container.innerHTML = '<p style="text-align: center; color: #999;">No upcoming events.</p>';
   }
 }
 
