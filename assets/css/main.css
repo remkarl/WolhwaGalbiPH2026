@@ -459,6 +459,47 @@ section {
   font-size: 0.95rem;
 }
 
+/* Enlarge-on-click modal for menu images */
+.menu-item .menu-image {
+  cursor: zoom-in;
+  transition: transform 0.25s ease;
+}
+.menu-item .menu-image:hover {
+  transform: scale(1.02);
+}
+
+/* Modal overlay that displays the enlarged image */
+.image-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.image-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.image-modal .modal-image {
+  max-width: 92%;
+  max-height: 92%;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  border-radius: 12px;
+  object-fit: contain;
+  cursor: zoom-out;
+  transition: transform 0.25s ease;
+}
+.image-modal .modal-image.loading {
+  transform: scale(0.98);
+  filter: blur(6px) saturate(.8);
+}
+
+
 /* Medium screens: two cards per row */
 @media (min-width: 900px) {
   .menu-grid .menu-item {

@@ -110,3 +110,63 @@ if (document.readyState === 'loading') {
 } else {
   initScrollAnimations();
 }
+
+/* ===== MENU IMAGE ENLARGE (CLICK) ===== */
+function initMenuImageModal() {
+  // create modal element once
+  const modal = document.createElement('div');
+  modal.className = 'image-modal';
+  modal.innerHTML = '<img class="modal-image" alt="Enlarged menu image">';
+  document.body.appendChild(modal);
+
+  const modalImg = modal.querySelector('.modal-image');
+
+  function openModal(src, alt) {
+    modalImg.classList.add('loading');
+    modalImg.src = src;
+    modalImg.alt = alt || 'Menu image';
+    modal.classList.add('open');
+    // prevent background scroll while modal open
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    modalImg.src = '';
+    modalImg.alt = '';
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+  }
+
+  // remove loading state once image has loaded
+  modalImg.addEventListener('load', () => modalImg.classList.remove('loading'));
+
+  // close when clicking overlay (but not when clicking the image)
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // close on ESC
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) {
+      closeModal();
+    }
+  });
+
+  // attach click handlers to current and future menu images
+  const menuGrid = document.querySelector('.menu-grid');
+  if (!menuGrid) return;
+
+  menuGrid.addEventListener('click', (e) => {
+    const img = e.target.closest('.menu-image');
+    if (!img) return;
+    openModal(img.src, img.alt);
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initMenuImageModal);
+} else {
+  initMenuImageModal();
+}
