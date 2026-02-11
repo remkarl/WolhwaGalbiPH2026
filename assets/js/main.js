@@ -174,9 +174,32 @@ function initMenuImageModal() {
   if (!menuGrid) return;
 
   menuGrid.addEventListener('click', (e) => {
-    const img = e.target.closest('.menu-image');
-    if (!img) return;
-    openModal(img.src, img.alt);
+    // prefer the explicit img if clicked
+    const clickedImg = e.target.closest('.menu-image');
+    if (clickedImg) {
+      openModal(clickedImg.src, clickedImg.alt);
+      return;
+    }
+
+    // if user clicked the card, map to the corresponding menuX.jpg
+    const item = e.target.closest('.menu-item');
+    if (!item) return;
+
+    const items = Array.from(menuGrid.querySelectorAll('.menu-item'));
+    const index = items.indexOf(item);
+    let src = null;
+    // try to find existing image inside the item first
+    const innerImg = item.querySelector('.menu-image');
+    if (innerImg && innerImg.src) {
+      src = innerImg.src;
+    }
+
+    // fallback to explicit filenames if no src found
+    if (!src && index >= 0) {
+      src = `assets/images/menu/menu${index + 1}.jpg`;
+    }
+
+    if (src) openModal(src, innerImg ? innerImg.alt : `menu${index + 1}.jpg`);
   });
 }
 
