@@ -66,6 +66,8 @@ section {
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .sidebar .logo {
@@ -90,6 +92,10 @@ section {
   flex: 1;
   margin: 0;
   padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .sidebar .nav li {
@@ -100,12 +106,11 @@ section {
 .sidebar .nav a {
   position: relative;
   padding: 0.8rem 1rem;
-  padding-left: 1.5rem;
-  display: block;
+  display: inline-block;
   color: #aaa;
   text-decoration: none;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 0 8px 8px 0;
+  transition: all 0.25s ease;
+  border-radius: 8px;
 }
 
 /* Left accent bar */
@@ -252,22 +257,26 @@ section {
   min-height: 100vh;
   background:
     linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.75)),
-    url("https://wolhwagalbi.ph/assets/hero.jpg") center/cover;
+    url("https://wolhwagalbi.ph/assets/hero.jpg") center center / cover no-repeat;
   color: white;
   display: flex;
   align-items: center;
   text-align: center;
+  padding: 4rem 2rem;
 }
 
 .hero-logo {
   max-height: 90px;
-  margin-bottom: 1rem;
+  width: auto;
+  margin-bottom: 1.2rem;
   animation: fadeInDown 0.8s ease-out;
 }
 
 .hero-text {
   font-size: 1.25rem;
-  margin-bottom: 1rem;
+  max-width: 700px;
+  margin: 0 auto 1.5rem auto;
+  line-height: 1.6;
   animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
@@ -498,6 +507,27 @@ section {
 
 
 /* Responsive menu grid */
+@media (max-width: 768px) {
+    
+    .hero {
+        background-position: center top;
+    }
+    
+    .hero-logo {
+        max-width: 100%;
+    }
+    
+    .hero-text {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+    
+    .btn-primary {
+        padding: 0.7rem 1.6rem;
+        font-size: 0.9rem;
+    }
+}
+
 @media (min-width: 768px) {
   .menu-grid {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
