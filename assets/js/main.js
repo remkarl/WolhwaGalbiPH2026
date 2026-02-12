@@ -64,6 +64,8 @@ window.addEventListener('load', setActiveLink);
 /* ===== LOAD EVENTS ===== */
 async function loadEvents() {
   const container = document.getElementById('eventsContainer');
+  if (!container) return;
+
   const files = ['greenhills-opening.json', 'holiday-launch.json'];
   let found = false;
 
@@ -71,7 +73,9 @@ async function loadEvents() {
     try {
       const res = await fetch(`content/events/${f}`);
       if (!res.ok) continue;
+
       const e = await res.json();
+
       const card = document.createElement('article');
       card.className = 'event-card animate-on-scroll';
       card.innerHTML = `
@@ -80,20 +84,31 @@ async function loadEvents() {
           <h3>${e.title}</h3>
           <p class="date">${e.date}</p>
           <p>${e.description}</p>
-          <button onclick="alert('Learn more about: ${e.title}')">Learn More</button>
+          <button onclick="alert('Learn more about: ${e.title}')">
+            Learn More
+          </button>
         </div>
       `;
+
       container.appendChild(card);
       found = true;
-    } catch {}
+    } catch (err) {
+      console.warn("Event load failed:", f);
+    }
   }
 
   if (!found) {
-    container.innerHTML = '<p style="text-align: center; color: #999;">No upcoming events.</p>';
+    container.innerHTML = `
+      <p style="text-align:center;color:#999;">
+        No upcoming events.
+      </p>
+    `;
   }
+
+  // 🔥 Re-trigger scroll animations after injecting
+  initScrollAnimations();
 }
 
-document.addEventListener('DOMContentLoaded', loadEvents);
 
 /* ===== ANIMATE ON SCROLL (IntersectionObserver) ===== */
 function initScrollAnimations() {
